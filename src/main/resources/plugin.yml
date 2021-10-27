@@ -1,0 +1,5 @@
+name: CrossCommunication
+main: nl.aurora.crosscommunication.CrossCommunication
+version: ${project.version}
+author: SweetAurora
+description: Used for Forge-Spigot cross communication.
