@@ -3,3 +3,4 @@ main: nl.aurora.crosscommunication.CrossCommunication
 version: ${project.version}
 author: SweetAurora
 description: Used for Forge-Spigot cross communication.
+api-version: 1.13
