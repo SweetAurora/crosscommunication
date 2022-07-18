@@ -9,7 +9,7 @@ An example would be:
     <repositories>
         <repository>
             <id>sweetaurora-maven</id>
-            <url>https://nexus.sweetaurora.tech/repository/combined-repo/</url>
+            <url>https://nexus.sweetaurora.tech/repository/public/</url>
         </repository>
         ...
     </repositories>
