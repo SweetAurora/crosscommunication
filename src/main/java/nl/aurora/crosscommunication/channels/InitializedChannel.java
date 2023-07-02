@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public final class InitializedChannel {
     private final Map<Integer, RegisteredPacket> registeredPacketMap;
-    private final Map<Class<IMessage>, Integer> imageToIdMap;
+    private final Map<Class<IMessage>, Integer> messageToIdMap;
     private final Plugin plugin;
     private final String channelName;
 
@@ -27,7 +27,7 @@ public final class InitializedChannel {
         this.plugin = plugin;
         this.channelName = channel;
         this.registeredPacketMap = new HashMap<>();
-        this.imageToIdMap = new HashMap<>();
+        this.messageToIdMap = new HashMap<>();
         Bukkit.getServer().getMessenger().registerIncomingPluginChannel(plugin, channel, new PacketListener(this));
         Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(plugin, channel);
     }
@@ -39,12 +39,12 @@ public final class InitializedChannel {
      * @param message the packet to send to the user.
      */
     public void sendPacket(Player player, IMessage message) {
-        if (!imageToIdMap.containsKey(message.getClass())) {
+        if (!messageToIdMap.containsKey(message.getClass())) {
             plugin.getLogger().severe("Tried sending unregistered packet " + message.getClass().getSimpleName() + ".");
             return;
         }
         ByteBuf byteBuf = Unpooled.buffer();
-        byteBuf.writeByte(imageToIdMap.get(message.getClass()));
+        byteBuf.writeByte(messageToIdMap.get(message.getClass()));
         message.toBytes(byteBuf);
         player.sendPluginMessage(plugin, channelName, byteBuf.array());
     }
@@ -57,7 +57,7 @@ public final class InitializedChannel {
      * @param handler Packet handler class
      */
     public void registerPacket(int id, Class<IMessage> message, Class<IMessageHandler<?>> handler) {
-        this.imageToIdMap.put(message, id);
+        this.messageToIdMap.put(message, id);
         this.registeredPacketMap.put(id, new RegisteredPacket(id, message, handler));
     }
 
